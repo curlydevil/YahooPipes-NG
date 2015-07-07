@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>YahooPipes News!</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body class="container" ng-app="nasaNews" ng-controller="NewsController as vm">
+        <header>
+            <h1 class="well text-center" id="page-motto">
+                {{vm.pipe.title}}
+            </h1>
+        </header>
+        <section id="jumbo" class="jumbotron content">
+            <div ng-if="vm.pipe.newsCount"
+                 ng-repeat="newsPost in vm.pipe.items track by $index">
+                <div class="well table-row bg-cover"
+                     ng-style="{'background-image': 'url('+newsPost.enclosure.url+')'}">
+                    <div class="vcenter table-cell">
+                        <a class="thumbnail" href="{{newsPost.enclosure.url}}" target="_blank">
+                            <img ng-src="{{newsPost.enclosure.url}}" title="Click to open full size image in new window">
+                        </a>
+                        <p class="vcenter table-cell well news-title"
+                           ng-click="vm.togglePostDescription($index)">
+                            {{newsPost.title}}
+                        </p>
+                        <p class="vcenter table-cell well post-details"
+                           ng-show="newsPost.show">
+                            {{newsPost.description}}
+                            <br/>
+                            <a href="{{newsPost.link}}" target="_blank">More info</a>
+                        </p>
+                   </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Dependencies -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.js"></script>
+
+        <!-- App -->
+        <script src="app/app.js"></script>
+
+        <!-- Services -->
+        <script src="common/services/nasaNewsSource.js"></script>
+
+        <!-- Controllers -->
+        <script src="app/newsController.js"></script>
+    </body>
+</html>
