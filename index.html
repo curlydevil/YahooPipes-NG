@@ -12,12 +12,15 @@
     </head>
     <body class="container" ng-app="nasaNews" ng-controller="NewsController as vm">
         <header>
-            <h1 class="well text-center" id="page-motto">
+            <h1 class="well text-center" ng-if="vm.errors.length" ng-repeat="error in vm.errors">
+                {{error}}
+            </h1>
+            <h1 class="well text-center" id="page-motto" ng-if="vm.pipe.title">
                 {{vm.pipe.title}}
             </h1>
         </header>
         <section id="jumbo" class="jumbotron content">
-            <div ng-if="vm.pipe.newsCount"
+            <div ng-if="vm.pipe.items.length"
                  ng-repeat="newsPost in vm.pipe.items track by $index">
                 <div class="well table-row bg-cover"
                      ng-style="{'background-image': 'url('+newsPost.enclosure.url+')'}">
@@ -26,7 +29,7 @@
                             <img ng-src="{{newsPost.enclosure.url}}" title="Click to open full size image in new window">
                         </a>
                         <p class="vcenter table-cell well news-title"
-                           ng-click="vm.togglePostDescription($index)">
+                           ng-click="vm.togglePostDescription(newsPost)">
                             {{newsPost.title}}
                         </p>
                         <p class="vcenter table-cell well post-details"
@@ -43,13 +46,12 @@
 
         <!-- Dependencies -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.js"></script>
 
         <!-- App -->
         <script src="app/app.js"></script>
 
         <!-- Services -->
-        <script src="common/services/nasaNewsSource.js"></script>
+        <script src="common/services/pipesNewsSource.js"></script>
 
         <!-- Controllers -->
         <script src="app/newsController.js"></script>
